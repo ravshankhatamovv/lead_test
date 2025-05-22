@@ -13,6 +13,7 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
 
 ## Basic Commands
 - Running application locally
+
       $ docker-compose up --build 
     
 - Making migration locally
@@ -20,6 +21,7 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
       $ docker-compose run --rm django python manage.py makemigrations/migrate
     
 - Accessing to swagger from local browser 
+
       $ http://localhost:8000/api/docs/
 
 ### Setting Up Your Users
