@@ -12,14 +12,15 @@ License: MIT
 Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
 
 ## Basic Commands
-Running application locally
+- Running application locally
       $ docker-compose up --build 
     
-Making migration locally
+- Making migration locally
 
       $ docker-compose run --rm django python manage.py makemigrations/migrate
     
-Accessing to swagger from local browser http://localhost:8000/api/docs/
+- Accessing to swagger from local browser 
+      $ http://localhost:8000/api/docs/
 
 ### Setting Up Your Users
 
