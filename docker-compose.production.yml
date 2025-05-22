@@ -1,0 +1,84 @@
+volumes:
+  empire_postgres_data: {}
+  empire_postgres_data_backups: {}
+  empire_django_media: {}
+
+  empire_redis_data: {}
+  # client_service_mongodb_data: {}  
+
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+
+    image: empire_production_django
+    restart: unless-stopped
+    volumes:
+      # - client_service_production_django_media:/app/media
+      # - client_service_production_django_media:/app/staticfiles
+      - /empire_static/empire.uz/media:/app/media
+      - /empire_static/empire.uz/static:/app/staticfiles
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
+    command: /start
+    ports:
+      - 8032:5000
+    networks:
+      - default
+      - inner
+      
+  postgres:
+  
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: empire_production_postgres
+    restart: unless-stopped
+    volumes:
+      - empire_postgres_data:/var/lib/postgresql/data
+      - empire_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.production/.postgres
+    networks:
+      - default
+      - inner
+
+  redis:
+    image: docker.io/redis:6
+    restart: unless-stopped
+    volumes:
+      - empire_redis_data:/data
+    networks:
+      - default
+      - inner
+
+  celeryworker:
+    <<: *django
+    image: empire_production_celeryworker
+    
+    command: /start-celeryworker
+    ports: [ ]
+    restart: unless-stopped
+    networks:
+      - default
+      - inner
+
+  celerybeat:
+    <<: *django
+    image: empire_production_celerybeat
+    command: /start-celerybeat
+    ports: [ ]
+    networks:
+      - default
+      - inner
+      
+networks:
+    inner:
+        name: inner-network
+        driver: bridge
