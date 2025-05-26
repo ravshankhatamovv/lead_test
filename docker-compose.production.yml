@@ -80,5 +80,5 @@ services:
       
 networks:
     inner:
-        name: inner-network
+        name: inner-network-lead
         driver: bridge
