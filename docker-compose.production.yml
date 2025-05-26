@@ -28,7 +28,7 @@ services:
       - ./.envs/.production/.postgres
     command: /start
     ports:
-      - 8010:5000
+      - 8012:5000
     networks:
       - default
       - inner
