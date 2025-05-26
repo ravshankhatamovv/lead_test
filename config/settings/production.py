@@ -18,7 +18,7 @@ from .base import env
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["your_domain.uz"])
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["mohir-dev.vita-soft.uz"])
 # ALLOWED_HOSTS=['*']
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ sentry_sdk.init(
 # -------------------------------------------------------------------------------
 # Tools that generate code samples can use SERVERS to point to the correct domain
 SPECTACULAR_SETTINGS["SERVERS"] = [
-    {"url": "https://your_domain.uz/", "description": "Production server"},
+    {"url": "https://mohir-dev.vita-soft.uz/", "description": "Production server"},
 ]
 # Your stuff...
 # ------------------------------------------------------------------------------
@@ -194,6 +194,7 @@ SPECTACULAR_SETTINGS["SERVERS"] = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  
     "http://localhost:4000",
+    "https://mohir-dev.vita-soft.uz"
     
 ]
 

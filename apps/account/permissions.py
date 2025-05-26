@@ -13,4 +13,5 @@ class OnlyAttornyCanPermission(permissions.BasePermission):
         is_attorny=CustomUser.objects.filter(id=request.user.id, status=CustomUser.EmployeeStatus.ATTORNEY).exists()
         return is_attorny
 
+
     

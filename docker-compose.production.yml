@@ -1,9 +1,9 @@
 volumes:
-  empire_postgres_data: {}
-  empire_postgres_data_backups: {}
-  empire_django_media: {}
+  mohir_postgres_data: {}
+  mohir_postgres_data_backups: {}
+  mohir_django_media: {}
 
-  empire_redis_data: {}
+  mohir_redis_data: {}
   # client_service_mongodb_data: {}  
 
 
@@ -13,13 +13,13 @@ services:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
 
-    image: empire_production_django
+    image: mohir_production_django
     restart: unless-stopped
     volumes:
       # - client_service_production_django_media:/app/media
       # - client_service_production_django_media:/app/staticfiles
-      - /empire_static/empire.uz/media:/app/media
-      - /empire_static/empire.uz/static:/app/staticfiles
+      - /mohir_static/empire.uz/media:/app/media
+      - /mohir_static/empire.uz/static:/app/staticfiles
     depends_on:
       - postgres
       - redis
@@ -28,7 +28,7 @@ services:
       - ./.envs/.production/.postgres
     command: /start
     ports:
-      - 8032:5000
+      - 8010:5000
     networks:
       - default
       - inner
@@ -38,11 +38,11 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: empire_production_postgres
+    image: mohir_production_postgres
     restart: unless-stopped
     volumes:
-      - empire_postgres_data:/var/lib/postgresql/data
-      - empire_postgres_data_backups:/backups
+      - mohir_postgres_data:/var/lib/postgresql/data
+      - mohir_postgres_data_backups:/backups
     env_file:
       - ./.envs/.production/.postgres
     networks:
@@ -53,14 +53,14 @@ services:
     image: docker.io/redis:6
     restart: unless-stopped
     volumes:
-      - empire_redis_data:/data
+      - mohir_redis_data:/data
     networks:
       - default
       - inner
 
   celeryworker:
     <<: *django
-    image: empire_production_celeryworker
+    image: mohir_production_celeryworker
     
     command: /start-celeryworker
     ports: [ ]
@@ -71,7 +71,7 @@ services:
 
   celerybeat:
     <<: *django
-    image: empire_production_celerybeat
+    image: mohir_production_celerybeat
     command: /start-celerybeat
     ports: [ ]
     networks:

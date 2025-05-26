@@ -11,7 +11,7 @@ License: MIT
 
 Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
 
-## Basic Commands
+## LOCAL DEV:Basic Commands
 - Running application locally
 
       $ docker-compose up --build 
@@ -20,16 +20,15 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
 
       $ docker-compose run --rm django python manage.py makemigrations/migrate
     
-- Accessing to swagger from local browser 
-
-      $ http://localhost:8000/api/docs/
-
-### Setting Up Your Users
-
 
 - To create a **superuser account**, use this command:
 
       $ docker-compose run --rm django python manage.py createsuperuser
+
+- Accessing to swagger from local browser 
+
+      $ http://localhost:8000/api/docs/
+
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
@@ -90,9 +89,30 @@ The system is set up with reasonable defaults, including 404 logging and integra
 You must set the DSN url in production.
 
 ## Deployment
-
 The following details how to deploy this application.
+1. Run docker production file for 
+
+- Running application in prod mode
+
+      $ docker-compose -f docker-compose.production.yml up --build -d
+    
+- Making migration in prod mode (never make migration in prod mode)
+
+      $ docker-compose -f docker-compose.production.yml run --rm django python manage.py migrate
+
+- To create a **superuser account**, use this command:
+
+      $ docker-compose -f docker-compose.production.yml run --rm django python manage.py createsuperuser
+    
+- Accessing to swagger from your browser 
+
+      $ https://your_domain.uz/api/docs/
+
+2. Configure nginx for the domain and the port which app is running on.
+See detailes [nginx documentation](https://nginx.org/en/docs/)
 
 ### Docker
 
 See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
+
+
