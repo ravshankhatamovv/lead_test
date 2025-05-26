@@ -90,7 +90,7 @@ You must set the DSN url in production.
 
 ## Deployment
 The following details how to deploy this application.
-1. Run docker production file for 
+1. Run docker production file for after creating .env files for django app and portgres with names .django and .postgres in .envs/.production directory of the app
 
 - Running application in prod mode
 
